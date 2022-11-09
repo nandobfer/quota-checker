@@ -5,7 +5,10 @@ from datetime import datetime
 now = datetime.now()
 
 def size(value):
-    return f'{round(value / float(1<<20), 2)} mb'
+    return round(value / float(1<<20), 2)
+
+def formated_size(value):
+    return f'{value} mb'
 
 def perDay(bw):
     bw_per_day = bw / now.day
@@ -27,16 +30,16 @@ def getQuota(user):
     used = int(out['totalbytes'])
     limit = int(out['limit'])
     print(f'user: {user}')
-    print(f'used space: {size(used)}')
-    print(f"limit: {size(limit)}")
+    print(f'used space: {formated_size(size(used))}')
+    print(f"limit: {formated_size(size(limit))}")
     
     per_day = perDay(used)
     estimated_total = estimatedTotal(per_day)
     new_limit = getSolvedLimit(estimated_total)
     
-    print(f'bandwidth per day: {size(per_day)}')
-    print(f'estimated bandwidth at months end: {size(estimated_total)}')
-    print(f'recomended limit: {size(new_limit)}')
+    print(f'bandwidth per day: {formated_size(size(per_day))}')
+    print(f'estimated bandwidth at months end: {formated_size(size(estimated_total))}')
+    print(f'recomended limit: {formated_size(size(new_limit))}')
     
 if __name__ == "__main__":
     user = sys.argv[1]
