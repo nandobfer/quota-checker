@@ -5,7 +5,7 @@ def getQuota(user):
     print()
     (out, err) = proc.communicate()
     # out = json.loads(str(out)[1:])
-    print(str(out))
+    print(str(out)[1:])
     print(type(out))
     # out = out.split('/dev/sda1')[1]
     # out = out.strip()
