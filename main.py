@@ -4,7 +4,7 @@ def getQuota(user):
     proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year 2022 month 11 --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
-    out = json.loads(str(out))
+    out = json.loads(str(out)[1:])
     print(out)
     print(type(out))
     # out = out.split('/dev/sda1')[1]
