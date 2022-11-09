@@ -19,7 +19,7 @@ def getQuota(user):
     print(f'used space: {size(used, system=si)}')
     print(f"limit: {size(limit, system=si)}")
     
-    print(f'bandwidth per day: {perDay(used)}')
+    print(f'bandwidth per day: {size(perDay(used), system=si)}')
     
 if __name__ == "__main__":
     user = sys.argv[1]
