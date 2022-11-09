@@ -23,7 +23,7 @@ def getSolvedLimit(bw_final):
     return limit
 
 def setLimit(user, value):
-    proc = subprocess.Popen([f"whmapi1 user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen([f"whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
     print(out)
