@@ -51,10 +51,10 @@ def getQuota(user):
     print(f'recomended limit: {formated_size(size(new_limit))}')
     setLimit(user, int(size(new_limit)))
     
-if __name__ == "__main__":
-    user = sys.argv[1]
-    getQuota(user)
-# else:
+user = sys.argv[1]
+getQuota(user)
+# if __name__ == "__main__":
+    # else:
 #     proc = subprocess.Popen(['ls /home'], stdout=subprocess.PIPE, shell=True)
 #     (out, err) = proc.communicate()
 #     out = str(out)
