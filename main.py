@@ -24,7 +24,7 @@ def getSolvedLimit(bw_final):
 
 def setLimit(user, value):
     try:
-        proc = subprocess.Popen([f"whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
+        proc = subprocess.Popen([f"/usr/sbin/whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
         print()
         (out, err) = proc.communicate()
         print(f'limit updated to: {formated_size(value)}')
@@ -32,7 +32,7 @@ def setLimit(user, value):
         print(f'failed to update {user} limit')
 
 def getQuota(user):
-    proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year {now.year} month {now.month} --output=json"], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen([f"/usr/sbin/whmapi1 showbw searchtype=user search={user} year {now.year} month {now.month} --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
     out = json.loads(str(out)[2:-1])['data']['acct'][0]
