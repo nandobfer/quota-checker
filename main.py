@@ -5,6 +5,7 @@ def getQuota(user):
     print()
     (out, err) = proc.communicate()
     out = json.loads(str(out)[2:-1])['data']['acct']
+    print(out)
     used = int(out['totalbytes'])
     limit = int(out['limit'])
     print(f'user: {user}')
