@@ -6,11 +6,11 @@ def getQuota(user):
     print()
     (out, err) = proc.communicate()
     out = json.loads(str(out)[2:-1])['data']['acct'][0]
-    used = size(int(out['totalbytes']), system=si)
-    limit = size(int(out['limit']), system=si)
+    used = int(out['totalbytes'])
+    limit = int(out['limit'])
     print(f'user: {user}')
-    print(f'used space: {used}')
-    print(f"limit: {limit}")
+    print(f'used space: {size(used, system=si)}')
+    print(f"limit: {size(limit, system=si)}")
     
 if __name__ == "__main__":
     user = sys.argv[1]
