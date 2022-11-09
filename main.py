@@ -1,8 +1,11 @@
 import subprocess, json, sys
 from datetime import datetime
-from hurry.filesize import size, si
+# from hurry.filesize import size, si
 
 now = datetime.now()
+
+def size(value):
+    return f'{value / 1024} mb'
 
 def perDay(bw):
     bw_per_day = bw / now.day
@@ -24,16 +27,16 @@ def getQuota(user):
     used = int(out['totalbytes'])
     limit = int(out['limit'])
     print(f'user: {user}')
-    print(f'used space: {size(used, system=si)}')
-    print(f"limit: {size(limit, system=si)}")
+    print(f'used space: {size(used)}')
+    print(f"limit: {size(limit)}")
     
     per_day = perDay(used)
     estimated_total = estimatedTotal(per_day)
     new_limit = getSolvedLimit(estimated_total)
     
-    print(f'bandwidth per day: {size(per_day, system=si)}')
-    print(f'estimated bandwidth at months end: {size(estimated_total, system=si)}')
-    print(f'recomended limit: {size(new_limit, system=si)}')
+    print(f'bandwidth per day: {size(per_day)}')
+    print(f'estimated bandwidth at months end: {size(estimated_total)}')
+    print(f'recomended limit: {size(new_limit)}')
     
 if __name__ == "__main__":
     user = sys.argv[1]
