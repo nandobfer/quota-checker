@@ -1,7 +1,7 @@
 import subprocess, json, sys
 
 def getQuota(user):
-    proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year 2022 month 11 --output=jsonpretty"], stdout=subprocess.PIPE, shell=True)
+    proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year 2022 month 11 --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
     # out = json.loads(str(out))
