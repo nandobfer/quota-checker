@@ -26,6 +26,7 @@ def setLimit(user, value):
     proc = subprocess.Popen([f"whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
+    out = json.loads(str(out)[2:-1])['metadata']['reason']
     print(out)
 
 def getQuota(user):
