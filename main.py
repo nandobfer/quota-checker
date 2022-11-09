@@ -23,9 +23,13 @@ def getSolvedLimit(bw_final):
     return limit
 
 def setLimit(user, value):
-    proc = subprocess.Popen([f"whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
-    print()
-    (out, err) = proc.communicate()
+    try:
+        proc = subprocess.Popen([f"whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
+        print()
+        (out, err) = proc.communicate()
+        print(f'limit updated to: {formated_size(value)}')
+    except:
+        print(f'failed to update {user} limit')
 
 def getQuota(user):
     proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year 2022 month 11 --output=json"], stdout=subprocess.PIPE, shell=True)
@@ -35,7 +39,7 @@ def getQuota(user):
     used = int(out['totalbytes'])
     limit = int(out['limit'])
     print(f'user: {user}')
-    print(f'used space: {formated_size(size(used))}')
+    print(f'used bandwidth: {formated_size(size(used))}')
     print(f"limit: {formated_size(size(limit))}")
     
     per_day = perDay(used)
