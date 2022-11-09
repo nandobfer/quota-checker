@@ -1,13 +1,13 @@
 import subprocess, json, sys
+from hurry.filesize import size, si
 
 def getQuota(user):
     proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year 2022 month 11 --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
     out = json.loads(str(out)[2:-1])['data']['acct'][0]
-    print(out)
-    used = int(out['totalbytes'])
-    limit = int(out['limit'])
+    used = size(int(out['totalbytes']), system=si)
+    limit = size(int(out['limit']), system=si)
     print(f'user: {user}')
     print(f'used space: {used}')
     print(f"limit: {limit}")
