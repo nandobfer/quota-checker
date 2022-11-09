@@ -7,6 +7,10 @@ now = datetime.now()
 def perDay(bw):
     bw_per_day = bw / now.day
     return bw_per_day
+
+def estimatedTotal(bw_per_day):
+    bw_final = bw_per_day * 30
+    return bw_final
     
 def getQuota(user):
     proc = subprocess.Popen([f"whmapi1 showbw searchtype=user search={user} year 2022 month 11 --output=json"], stdout=subprocess.PIPE, shell=True)
@@ -20,6 +24,7 @@ def getQuota(user):
     print(f"limit: {size(limit, system=si)}")
     
     print(f'bandwidth per day: {size(perDay(used), system=si)}')
+    print(f'estimated bandwidth at months end: {size(estimatedTotal(perDay(used)), system=si)}')
     
 if __name__ == "__main__":
     user = sys.argv[1]
