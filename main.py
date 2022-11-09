@@ -5,7 +5,7 @@ from datetime import datetime
 now = datetime.now()
 
 def size(value):
-    return f'{value / float(1<<20)} mb'
+    return f'{round(value / float(1<<20), 2)} mb'
 
 def perDay(bw):
     bw_per_day = bw / now.day
