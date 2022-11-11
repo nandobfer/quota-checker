@@ -1,5 +1,6 @@
 import subprocess, json, sys
 from datetime import datetime
+from burgos.mysql_handler import Mysql
 # from hurry.filesize import size, si
 
 now = datetime.now()
@@ -30,6 +31,23 @@ def setLimit(user, value):
         print(f'limit updated to: {formated_size(value)}')
     except:
         print(f'failed to update {user} limit')
+        
+def logHistory(data):
+    mysql = Mysql({
+        'host': 'app.agenciaboz.com.br',
+        'user': 'python',
+        'password': 'SucessoZOP2022!',
+        'database': 'agenciaboz_sistema'
+    }, '')
+    mysql.connect()
+    print(data)
+
+    columns = "(user, used, prediction, date)"
+    values = f"""("{data["user"]}", {data["used"]}, {data["prediction"]}, current_date())"""
+    sql = f"""INSERT INTO historico_bandwitdh {columns} VALUES {values} ;"""
+    
+    mysql.run(sql)
+    mysql.disconnect()
 
 def getQuota(user):
     proc = subprocess.Popen([f"/usr/sbin/whmapi1 showbw searchtype=user search={user} year {now.year} month {now.month} --output=json"], stdout=subprocess.PIPE, shell=True)
@@ -50,6 +68,7 @@ def getQuota(user):
     print(f'estimated bandwidth at months end: {formated_size(size(estimated_total))}')
     print(f'recomended limit: {formated_size(size(new_limit))}')
     setLimit(user, int(size(new_limit)))
+    logHistory({'user': user, 'used': size(used), 'prediction': size(estimated_total)})
     
 user = sys.argv[1]
 getQuota(user)
