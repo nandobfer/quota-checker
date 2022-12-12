@@ -57,7 +57,6 @@ def getQuota(user):
         out = json.loads(str(out)[2:-1])['data']['acct'][0]
     except:
         print(f"""user {user} doesn't have an acct:""")
-        print(json.loads(out))
         return False
     used = int(out['totalbytes'])
     try:
