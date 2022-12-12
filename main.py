@@ -58,11 +58,13 @@ def getQuota(user):
     except:
         print(f"""user {user} doesn't have an acct:""")
         print(json.loads(out))
+        return False
     used = int(out['totalbytes'])
     try:
         limit = int(out['limit'])
     except:
         print(f"{user}'s limit is configured as unlimited.")
+        return False
         
     print(f'user: {user}')
     print(f'used bandwidth: {formated_size(size(used))}')
