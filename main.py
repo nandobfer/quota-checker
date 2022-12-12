@@ -53,9 +53,17 @@ def getQuota(user):
     proc = subprocess.Popen([f"/usr/sbin/whmapi1 showbw searchtype=user search={user} year {now.year} month {now.month} --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
-    out = json.loads(str(out)[2:-1])['data']['acct'][0]
+    try:
+        out = json.loads(str(out)[2:-1])['data']['acct'][0]
+    except:
+        print(f"""user {user} doesn't have an acct:""")
+        print(json.loads(out))
     used = int(out['totalbytes'])
-    limit = int(out['limit'])
+    try:
+        limit = int(out['limit'])
+    except:
+        print(f"{user}'s limit is configured as unlimited.")
+        
     print(f'user: {user}')
     print(f'used bandwidth: {formated_size(size(used))}')
     print(f"limit: {formated_size(size(limit))}")
