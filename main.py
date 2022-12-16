@@ -53,15 +53,15 @@ def getQuota(user):
     print()
     (out, err) = proc.communicate()
     try:
-        out = json.loads(str(out)[2:-1])['data']['acct'][0]
-        if not out['user'] == user:
-            out = json.loads(str(out)[2:-1])['data']['acct'][1]
+        data = json.loads(str(out)[2:-1])['data']['acct'][0]
+        if not data['user'] == user:
+            data = json.loads(str(out)[2:-1])['data']['acct'][1]
     except:
         print(f"""user {user} doesn't have an acct:""")
         return False
-    used = int(out['totalbytes'])
+    used = int(data['totalbytes'])
     try:
-        limit = int(out['limit'])
+        limit = int(data['limit'])
     except:
         print(f"{user}'s limit is configured as unlimited.")
         return False
