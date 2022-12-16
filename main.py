@@ -80,17 +80,3 @@ def getQuota(user):
     
 user = sys.argv[1]
 getQuota(user)
-# if __name__ == "__main__":
-    # else:
-#     proc = subprocess.Popen(['ls /home'], stdout=subprocess.PIPE, shell=True)
-#     (out, err) = proc.communicate()
-#     out = str(out)
-#     out = out.split('\\n')
-#     out.pop(0)
-#     out.pop(-1)
-
-#     for user in out:
-#         try:
-#             getQuota(user)
-#         except:
-#             pass
