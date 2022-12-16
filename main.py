@@ -54,6 +54,8 @@ def getQuota(user):
     (out, err) = proc.communicate()
     try:
         out = json.loads(str(out)[2:-1])['data']['acct'][0]
+        if not out['user'] == user:
+            out = json.loads(str(out)[2:-1])['data']['acct'][1]
     except:
         print(f"""user {user} doesn't have an acct:""")
         return False
