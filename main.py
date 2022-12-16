@@ -26,7 +26,6 @@ def getSolvedLimit(bw_final):
 def setLimit(user, value):
     try:
         proc = subprocess.Popen([f"/usr/sbin/whmapi1 limitbw user={user} bwlimit={value} --output=json"], stdout=subprocess.PIPE, shell=True)
-        print()
         (out, err) = proc.communicate()
         print(f'limit updated to: {formated_size(value)}')
     except:
@@ -40,7 +39,7 @@ def logHistory(data):
         'database': 'agenciaboz_sistema'
     }, '')
     mysql.connect()
-    print(data)
+    # print(data)
 
     columns = "(user, used, prediction, date)"
     values = f"""("{data["user"]}", {data["used"]}, {data["prediction"]}, current_date())"""
