@@ -47,15 +47,23 @@ def logHistory(data):
     
     mysql.run(sql)
     mysql.disconnect()
+    
+def getAccountUser(user, out, index):
+    data = json.loads(str(out)[2:-1])['data']['acct'][index]
+    if data['user'] == user:
+        return data
+    else:
+        index += 1
+        data = getAccountUser(user, out, index)
+        
+    return data
 
 def getQuota(user):
     proc = subprocess.Popen([f"/usr/sbin/whmapi1 showbw searchtype=user search={user} year {now.year} month {now.month} --output=json"], stdout=subprocess.PIPE, shell=True)
     print()
     (out, err) = proc.communicate()
     try:
-        data = json.loads(str(out)[2:-1])['data']['acct'][0]
-        if not data['user'] == user:
-            data = json.loads(str(out)[2:-1])['data']['acct'][1]
+        data = getAccountUser(user, out, 0)
     except:
         print(f"""user {user} doesn't have an acct:""")
         return False
